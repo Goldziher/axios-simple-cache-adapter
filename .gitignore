@@ -1,0 +1,13 @@
+dist/
+node_modules/
+coverage/
+.husky/
+.jest/
+*.log
+
+.DS_Store
+
+# plugin specific .idea files
+.idea/azure
+.idea/*.local.*
+.idea/sonarlint
