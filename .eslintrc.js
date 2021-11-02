@@ -4,5 +4,5 @@ module.exports = {
     parserOptions: {
         project: './tsconfig.json',
     },
-    ignorePatterns: ["*.shim.d.ts"]
+    ignorePatterns: ['*.shim.d.ts'],
 };

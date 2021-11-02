@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="850e0dfa-744f-4a97-9081-db7b5cb553f1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +83,7 @@
       <workItem from="1634295552008" duration="5451000" />
       <workItem from="1635876638332" duration="68000" />
       <workItem from="1635876710753" duration="1043000" />
-      <workItem from="1635877842756" duration="6156000" />
+      <workItem from="1635877842756" duration="6221000" />
     </task>
     <servers />
   </component>
