@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { AxiosCacheObject } from '../src';
 import { AxiosRequestConfig } from 'axios';
 import { CacheService } from '../src/cache';
@@ -26,12 +30,12 @@ describe('CacheService Tests node', () => {
     });
 
     afterEach(async () => {
-        await cache.storage.removeItem(url);
+        await cache.storage.removeItem(`axios-cache::${url}`);
     });
 
     it('sets value with the correct TTL', async () => {
         await cache.set(url, response, ttl);
-        const stringified = await cache.storage.getItem(url);
+        const stringified = await cache.storage.getItem(`axios-cache::${url}`);
         const cached = JSON.parse(stringified!) as AxiosCacheObject;
         expect(cached.value).toEqual(response);
         expect(cached.expiration).toEqual(new Date().getTime() + ttl);

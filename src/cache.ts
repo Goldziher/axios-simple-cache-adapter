@@ -9,7 +9,6 @@ import { isPromise } from '@tool-belt/type-predicates';
 
 export class CacheService {
     public readonly storage: AxiosCacheStorage | AsyncAxiosCacheStorage;
-    public readonly keys: string[] = [];
 
     constructor(storage?: AxiosCacheStorage | AsyncAxiosCacheStorage) {
         if (storage) {
@@ -24,8 +23,7 @@ export class CacheService {
     }
 
     async get(key: string): Promise<AxiosResponse | null> {
-        const index = this.keys.indexOf(key);
-        let cached = index > -1 ? this.storage.getItem(key) : null;
+        let cached = this.storage.getItem(this.cacheKey(key));
         if (isPromise(cached)) {
             cached = await Promise.resolve(cached);
         }
@@ -37,11 +35,10 @@ export class CacheService {
                 !Number.isNaN(Number(expiration)) &&
                 Number(expiration) < new Date().getTime()
             ) {
-                const removeItem = this.storage.removeItem(key);
+                const removeItem = this.storage.removeItem(this.cacheKey(key));
                 if (isPromise(removeItem)) {
                     await removeItem;
                 }
-                this.keys.splice(index, 1);
                 return null;
             }
             return value;
@@ -51,7 +48,7 @@ export class CacheService {
 
     async set(key: string, value: AxiosResponse, ttl: number): Promise<void> {
         const setItem = this.storage.setItem(
-            key,
+            this.cacheKey(key),
             JSON.stringify({
                 expiration: new Date().getTime() + ttl,
                 value,
@@ -60,6 +57,9 @@ export class CacheService {
         if (isPromise(setItem)) {
             await setItem;
         }
-        this.keys.push(key);
+    }
+
+    private cacheKey(key: string): string {
+        return `axios-cache::${key}`;
     }
 }

@@ -9,6 +9,7 @@ jest.mock('axios/lib/adapters/xhr');
 
 describe('axiosCacheAdapter', () => {
     const url = 'test/some-sub-path/?params';
+    const cacheKey = `axios-cache::${url}`;
     const config: AxiosRequestConfig = { url, method: 'get' };
     const data = { value: 'test' };
     const response = {
@@ -61,7 +62,7 @@ describe('axiosCacheAdapter', () => {
             await cacheAdapter(config);
             expect(mockStorage.setItem).toHaveBeenCalled();
             const [call] = (mockStorage.setItem as jest.Mock).mock.calls;
-            expect(call[0]).toBe(url);
+            expect(call[0]).toBe(cacheKey);
             expect(JSON.parse(call[1])).toEqual({
                 value: responseWithHeader,
                 expiration: new Date().getTime() + ONE_SECOND_IN_MS * maxAge,
@@ -80,7 +81,7 @@ describe('axiosCacheAdapter', () => {
         await adapterWithDefaultTTL({ ...config, [AXIOS_CACHE]: true } as any);
         expect(mockStorage.setItem).toHaveBeenCalled();
         const [call] = (mockStorage.setItem as jest.Mock).mock.calls;
-        expect(call[0]).toBe(url);
+        expect(call[0]).toBe(cacheKey);
         expect(JSON.parse(call[1])).toEqual({
             value: response,
             expiration: new Date().getTime() + ONE_SECOND_IN_MS,
@@ -93,10 +94,39 @@ describe('axiosCacheAdapter', () => {
         } as any);
         expect(mockStorage.setItem).toHaveBeenCalled();
         const [call] = (mockStorage.setItem as jest.Mock).mock.calls;
-        expect(call[0]).toBe(url);
+        expect(call[0]).toBe(cacheKey);
         expect(JSON.parse(call[1])).toEqual({
             value: response,
             expiration: new Date().getTime() + ONE_SECOND_IN_MS,
+        });
+    });
+    describe('debug', () => {
+        it('writes to console when serving cache when debug is set as true', async () => {
+            const consoleSpy = jest.spyOn(console, 'log');
+            (mockStorage.getItem as jest.Mock).mockReturnValueOnce(
+                JSON.stringify({
+                    value: response,
+                    expiration: new Date().getTime() + ONE_SECOND_IN_MS,
+                }),
+            );
+            const debugAdapter = createCacheAdapter({
+                storage: mockStorage,
+                debug: true,
+            });
+            await debugAdapter(config);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
+        });
+        it('writes to console when setting cache when debug is set as true', async () => {
+            const consoleSpy = jest.spyOn(console, 'log');
+            const debugAdapter = createCacheAdapter({
+                storage: mockStorage,
+                debug: true,
+            });
+            await debugAdapter({
+                ...config,
+                [AXIOS_CACHE]: ONE_SECOND_IN_MS,
+            } as any);
+            expect(consoleSpy).toHaveBeenCalledTimes(1);
         });
     });
 });
