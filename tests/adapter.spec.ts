@@ -1,4 +1,4 @@
-import { AxiosCacheStorage, createCacheAdapter } from '../src';
+import { AXIOS_CACHE, AxiosCacheStorage, createCacheAdapter } from '../src';
 import { AxiosRequestConfig } from 'axios';
 import { ONE_SECOND_IN_MS } from '../src/constants';
 import httpAdapter from 'axios/lib/adapters/http';
@@ -29,6 +29,12 @@ describe('axiosCacheAdapter', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
+        (xhrAdapter as jest.Mock).mockImplementation(async () =>
+            Promise.resolve(response),
+        );
+        (httpAdapter as jest.Mock).mockImplementation(async () =>
+            Promise.resolve(response),
+        );
     });
 
     beforeAll(() => {
@@ -63,13 +69,34 @@ describe('axiosCacheAdapter', () => {
         },
     );
     it('does not cache a response when no cache-control headers are present', async () => {
-        (xhrAdapter as jest.Mock).mockImplementationOnce(async () =>
-            Promise.resolve(response),
-        );
-        (httpAdapter as jest.Mock).mockImplementationOnce(async () =>
-            Promise.resolve(response),
-        );
         await cacheAdapter(config);
         expect(mockStorage.setItem).not.toHaveBeenCalled();
+    });
+    it('respects default TTL when AXIOS_CACHE is set to true in request config', async () => {
+        const adapterWithDefaultTTL = createCacheAdapter({
+            defaultTTL: ONE_SECOND_IN_MS,
+            storage: mockStorage,
+        });
+        await adapterWithDefaultTTL({ ...config, [AXIOS_CACHE]: true } as any);
+        expect(mockStorage.setItem).toHaveBeenCalled();
+        const [call] = (mockStorage.setItem as jest.Mock).mock.calls;
+        expect(call[0]).toBe(url);
+        expect(JSON.parse(call[1])).toEqual({
+            value: response,
+            expiration: new Date().getTime() + ONE_SECOND_IN_MS,
+        });
+    });
+    it('respects AXIOS_CACHE value when set', async () => {
+        await cacheAdapter({
+            ...config,
+            [AXIOS_CACHE]: ONE_SECOND_IN_MS,
+        } as any);
+        expect(mockStorage.setItem).toHaveBeenCalled();
+        const [call] = (mockStorage.setItem as jest.Mock).mock.calls;
+        expect(call[0]).toBe(url);
+        expect(JSON.parse(call[1])).toEqual({
+            value: response,
+            expiration: new Date().getTime() + ONE_SECOND_IN_MS,
+        });
     });
 });

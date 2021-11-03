@@ -21,6 +21,7 @@ export interface AxiosCacheOptions {
     storage?: AxiosCacheStorage | AsyncAxiosCacheStorage;
     logger?: CacheLogger;
     defaultTTL?: number;
+    parseHeaders?: boolean;
 }
 
 export interface AxiosCacheObject {

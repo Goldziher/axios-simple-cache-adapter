@@ -1,7 +1,6 @@
 import { AxiosAdapter, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AxiosCacheOptions } from './types';
 import { CacheService } from './cache';
-import { ONE_SECOND_IN_MS } from './constants';
 import { getCacheTTL } from './ttl';
 
 function getAdapter(): AxiosAdapter {
@@ -14,6 +13,7 @@ function getAdapter(): AxiosAdapter {
 
 export function createCacheAdapter({
     debug = false,
+    parseHeaders = true,
     logger = console,
     storage,
     defaultTTL,
@@ -33,17 +33,18 @@ export function createCacheAdapter({
         } else {
             try {
                 const response = await adapter(config);
-                const ttl = getCacheTTL(config, response, defaultTTL);
+                const ttl = getCacheTTL({
+                    config,
+                    response,
+                    defaultTTL,
+                    parseHeaders,
+                });
                 if (isGetRequest && ttl) {
                     if (debug) {
                         const msg = `[axios-cache] caching response for url: ${config.url}`;
                         logger.log(msg);
                     }
-                    await cache.set(
-                        response.config.url!,
-                        response,
-                        ttl * ONE_SECOND_IN_MS,
-                    );
+                    await cache.set(response.config.url!, response, ttl);
                 }
                 return Promise.resolve(response);
             } catch (e) {
