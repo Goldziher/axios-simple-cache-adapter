@@ -5,9 +5,9 @@ import axios, { AxiosAdapter, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 function getAdapter(): AxiosAdapter {
     return (
-        Object.prototype.toString.call(process) === '[object process]'
-            ? require('axios/lib/adapters/http')
-            : require('axios/lib/adapters/xhr')
+        typeof XMLHttpRequest !== 'undefined'
+            ? require('axios/lib/adapters/xhr')
+            : require('axios/lib/adapters/http')
     ) as AxiosAdapter;
 }
 
@@ -30,22 +30,21 @@ export function createCacheAdapter({
                 logger.log(msg);
             }
             return cachedResponse;
-        } else {
-            const response = await adapter(config);
-            const ttl = getCacheTTL({
-                config,
-                response,
-                defaultTTL,
-                parseHeaders,
-            });
-            if (isGetRequest && ttl) {
-                if (debug) {
-                    const msg = `[axios-cache] caching response for url: ${url}`;
-                    logger.log(msg);
-                }
-                await cache.set(url, response, ttl);
-            }
-            return response;
         }
+        const response = await adapter(config);
+        const ttl = getCacheTTL({
+            config,
+            response,
+            defaultTTL,
+            parseHeaders,
+        });
+        if (isGetRequest && ttl) {
+            if (debug) {
+                const msg = `[axios-cache] caching response for url: ${url}`;
+                logger.log(msg);
+            }
+            await cache.set(url, response, ttl);
+        }
+        return response;
     };
 }

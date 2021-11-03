@@ -7,8 +7,8 @@ import { AxiosRequestConfig } from 'axios';
 import { CacheService } from '../src/cache';
 import localForage from 'localforage';
 
-describe.each([localStorage, sessionStorage, localForage])(
-    'CacheService Tests browser (%s storage)',
+describe.each([sessionStorage, localForage, undefined])(
+    'CacheService Tests (jsdom)',
     (storage) => {
         const url = 'test/';
         const cache = new CacheService(storage);

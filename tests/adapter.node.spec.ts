@@ -2,12 +2,10 @@ import { AXIOS_CACHE, AxiosCacheStorage, createCacheAdapter } from '../src';
 import { AxiosRequestConfig } from 'axios';
 import { ONE_SECOND_IN_MS } from '../src/constants';
 import httpAdapter from 'axios/lib/adapters/http';
-import xhrAdapter from 'axios/lib/adapters/xhr';
 
 jest.mock('axios/lib/adapters/http');
-jest.mock('axios/lib/adapters/xhr');
 
-describe('axiosCacheAdapter', () => {
+describe('axiosCacheAdapter tests (node)', () => {
     const url = 'test/some-sub-path/?params';
     const cacheKey = `axios-cache::${url}`;
     const config: AxiosRequestConfig = { url, method: 'get' };
@@ -30,9 +28,6 @@ describe('axiosCacheAdapter', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        (xhrAdapter as jest.Mock).mockImplementation(async () =>
-            Promise.resolve(response),
-        );
         (httpAdapter as jest.Mock).mockImplementation(async () =>
             Promise.resolve(response),
         );
@@ -53,13 +48,11 @@ describe('axiosCacheAdapter', () => {
                 ...response,
                 headers: { 'cache-control': `public, ${header}=${maxAge}` },
             };
-            (xhrAdapter as jest.Mock).mockImplementationOnce(async () =>
-                Promise.resolve(responseWithHeader),
-            );
             (httpAdapter as jest.Mock).mockImplementationOnce(async () =>
                 Promise.resolve(responseWithHeader),
             );
             await cacheAdapter(config);
+            expect(httpAdapter).toHaveBeenCalledWith(config);
             expect(mockStorage.setItem).toHaveBeenCalled();
             const [call] = (mockStorage.setItem as jest.Mock).mock.calls;
             expect(call[0]).toBe(cacheKey);
@@ -69,10 +62,38 @@ describe('axiosCacheAdapter', () => {
             });
         },
     );
-    it('does not cache a response when no cache-control headers are present', async () => {
+    it('does not parse cache-control when parseHeaders=false', async () => {
+        const responseWithHeader = {
+            ...response,
+            headers: { 'cache-control': `public, max-age=${maxAge}` },
+        };
+        (httpAdapter as jest.Mock).mockImplementationOnce(async () =>
+            Promise.resolve(responseWithHeader),
+        );
+        const adapterWithParseHeadersFalse = createCacheAdapter({
+            parseHeaders: false,
+            storage: mockStorage,
+        });
+        await adapterWithParseHeadersFalse(config);
+        expect(mockStorage.setItem).not.toHaveBeenCalled();
+    });
+    it('does not cache a response without cache-control headers or AXIOS_CACHE', async () => {
         await cacheAdapter(config);
         expect(mockStorage.setItem).not.toHaveBeenCalled();
     });
+    describe.each(['put', 'patch', 'delete', 'post', undefined])(
+        'method handling - %s',
+        (method: any) => {
+            it('does not hit cache for method: %s', async () => {
+                await cacheAdapter({ ...config, method });
+                expect(mockStorage.getItem).not.toHaveBeenCalled();
+            });
+            it('does not set cache for responses returned for method: %s', async () => {
+                await cacheAdapter({ ...config, method });
+                expect(mockStorage.setItem).not.toHaveBeenCalled();
+            });
+        },
+    );
     it('respects default TTL when AXIOS_CACHE is set to true in request config', async () => {
         const adapterWithDefaultTTL = createCacheAdapter({
             defaultTTL: ONE_SECOND_IN_MS,
@@ -87,11 +108,12 @@ describe('axiosCacheAdapter', () => {
             expiration: new Date().getTime() + ONE_SECOND_IN_MS,
         });
     });
-    it('respects AXIOS_CACHE value when set', async () => {
+    it('respects AXIOS_CACHE value when set to numerical value', async () => {
         await cacheAdapter({
             ...config,
             [AXIOS_CACHE]: ONE_SECOND_IN_MS,
         } as any);
+
         expect(mockStorage.setItem).toHaveBeenCalled();
         const [call] = (mockStorage.setItem as jest.Mock).mock.calls;
         expect(call[0]).toBe(cacheKey);
@@ -100,7 +122,29 @@ describe('axiosCacheAdapter', () => {
             expiration: new Date().getTime() + ONE_SECOND_IN_MS,
         });
     });
+    it('respects AXIOS_CACHE=false', async () => {
+        const responseWithHeader = {
+            ...response,
+            headers: { 'cache-control': `public, max-age=${maxAge}` },
+        };
+        const adapterWithDefaultTTL = createCacheAdapter({
+            defaultTTL: ONE_SECOND_IN_MS,
+            storage: mockStorage,
+        });
+        (httpAdapter as jest.Mock).mockImplementationOnce(async () =>
+            Promise.resolve(responseWithHeader),
+        );
+        await adapterWithDefaultTTL({
+            ...config,
+            [AXIOS_CACHE]: false,
+        } as any);
+        expect(mockStorage.setItem).not.toHaveBeenCalled();
+    });
     describe('debug', () => {
+        const debugAdapter = createCacheAdapter({
+            storage: mockStorage,
+            debug: true,
+        });
         it('writes to console when serving cache when debug is set as true', async () => {
             const consoleSpy = jest.spyOn(console, 'log');
             (mockStorage.getItem as jest.Mock).mockReturnValueOnce(
@@ -109,19 +153,11 @@ describe('axiosCacheAdapter', () => {
                     expiration: new Date().getTime() + ONE_SECOND_IN_MS,
                 }),
             );
-            const debugAdapter = createCacheAdapter({
-                storage: mockStorage,
-                debug: true,
-            });
             await debugAdapter(config);
             expect(consoleSpy).toHaveBeenCalledTimes(1);
         });
         it('writes to console when setting cache when debug is set as true', async () => {
             const consoleSpy = jest.spyOn(console, 'log');
-            const debugAdapter = createCacheAdapter({
-                storage: mockStorage,
-                debug: true,
-            });
             await debugAdapter({
                 ...config,
                 [AXIOS_CACHE]: ONE_SECOND_IN_MS,

@@ -6,7 +6,7 @@ import { AxiosCacheObject } from '../src';
 import { AxiosRequestConfig } from 'axios';
 import { CacheService } from '../src/cache';
 
-describe('CacheService Tests node', () => {
+describe('CacheService Tests (node)', () => {
     const url = 'test/';
     const cache = new CacheService();
     const config: AxiosRequestConfig = { url, method: 'get' };

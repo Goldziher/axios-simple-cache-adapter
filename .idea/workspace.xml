@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="850e0dfa-744f-4a97-9081-db7b5cb553f1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/tests/adapter.node.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/adapter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/adapter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/cache.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/cache.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/adapter.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/adapter.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/adapter.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/adapter.browser.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/cache.browser.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/cache.browser.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/cache.node.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/cache.node.spec.ts" afterDir="false" />
     </list>
@@ -52,7 +54,7 @@
     <property name="go.formatter.settings.were.checked" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -94,7 +96,7 @@
       <workItem from="1635921735113" duration="827000" />
       <workItem from="1635937290037" duration="2033000" />
       <workItem from="1635946358902" duration="1678000" />
-      <workItem from="1635953830830" duration="657000" />
+      <workItem from="1635953830830" duration="4100000" />
     </task>
     <servers />
   </component>
@@ -113,30 +115,12 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/adapter.ts</url>
-          <line>42</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/adapter.ts</url>
-          <line>40</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/test_env$All_Tests.info" NAME="All Tests Coverage Results" MODIFIED="1634299856653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/axios_cache$All_Tests.info" NAME="All Tests Coverage Results" MODIFIED="1635954441493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/axios_cache$All_Tests.info" NAME="All Tests Coverage Results" MODIFIED="1635968039252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

@@ -15,7 +15,6 @@ export class CacheService {
             this.storage = storage;
         } else {
             this.storage =
-                typeof window !== 'undefined' &&
                 typeof localStorage !== 'undefined'
                     ? localStorage
                     : new NodeLocalStorage('AxiosCache');
