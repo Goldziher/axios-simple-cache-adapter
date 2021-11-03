@@ -12,7 +12,22 @@
     ],
     "author": "Na'aman Hirschfeld",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Goldziher/axios-cache.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Goldziher/axios-cache/issues"
+    },
+    "homepage": "https://github.com/Goldziher/axios-cache#readme",
+    "files": [
+        "dist"
+    ],
+    "main": "dist/index.js",
+    "module": "dist/index.es.js",
+    "types": "dist/index.d.ts",
     "scripts": {
+        "build": "rimraf dist && rollup --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
         "format": "prettier --write '**/*.{js,md,json,yaml,yml}'",
         "lint": "eslint --fix '**/*.ts'",
         "test": "jest",
@@ -24,6 +39,7 @@
         "axios": "*"
     },
     "devDependencies": {
+        "@rollup/plugin-typescript": "^8.3.0",
         "@sprylab/eslint-config": "^1.6.2",
         "@types/jest": "^27.0.2",
         "@types/node": "^16.11.6",
@@ -34,6 +50,9 @@
         "jest": "^27.3.1",
         "lint-staged": ">=11",
         "prettier": "^2.4.1",
+        "rimraf": "^3.0.2",
+        "rollup": "2.59.0",
+        "rollup-plugin-terser": "^7.0.2",
         "ts-jest": "^27.0.7",
         "ts-node": "^10.4.0",
         "typescript": "^4.4.4"

@@ -5,7 +5,7 @@
         "baseUrl": ".",
         "esModuleInterop": true,
         "inlineSourceMap": true,
-        "module": "CommonJS",
+        "module": "commonJs",
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
@@ -13,8 +13,6 @@
         "strictFunctionTypes": true,
         "strictNullChecks": true,
         "target": "ESNext",
-        "resolveJsonModule": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
+        "resolveJsonModule": true
     }
 }

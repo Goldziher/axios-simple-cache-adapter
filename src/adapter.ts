@@ -3,13 +3,13 @@ import { AxiosCacheOptions } from './types';
 import { CacheService } from './cache';
 import { ONE_SECOND_IN_MS } from './constants';
 import { getCacheTTL } from './ttl';
-import httpAdapter from 'axios/lib/adapters/http';
-import xhrAdapter from 'axios/lib/adapters/xhr';
 
 function getAdapter(): AxiosAdapter {
-    return Object.prototype.toString.call(process) === '[object process]'
-        ? httpAdapter
-        : xhrAdapter;
+    return (
+        Object.prototype.toString.call(process) === '[object process]'
+            ? require('axios/lib/adapters/http')
+            : require('axios/lib/adapters/xhr')
+    ) as AxiosAdapter;
 }
 
 export function createCacheAdapter({
@@ -19,6 +19,7 @@ export function createCacheAdapter({
     defaultTTL,
 }: AxiosCacheOptions = {}): AxiosAdapter {
     const cache = new CacheService(storage);
+    const adapter = getAdapter();
     return async function (config: AxiosRequestConfig): Promise<AxiosResponse> {
         const isGetRequest = config.method?.toLowerCase() === 'get';
         const cachedResponse =
@@ -31,7 +32,7 @@ export function createCacheAdapter({
             return cachedResponse;
         } else {
             try {
-                const response = await getAdapter()(config);
+                const response = await adapter(config);
                 const ttl = getCacheTTL(config, response, defaultTTL);
                 if (isGetRequest && ttl) {
                     if (debug) {
