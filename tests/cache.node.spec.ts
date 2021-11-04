@@ -3,20 +3,19 @@
  */
 
 import { AxiosCacheObject } from '../src';
-import { AxiosRequestConfig } from 'axios';
 import { CacheService } from '../src/cache';
+import { parse } from 'flatted';
 
 describe('CacheService Tests (node)', () => {
     const url = 'test/';
     const cache = new CacheService();
-    const config: AxiosRequestConfig = { url, method: 'get' };
     const data = { value: 'testValue' };
     const response = {
         data,
         status: 200,
         statusText: 'OK',
         headers: {},
-        config,
+        config: {},
         request: {},
     };
     const ttl = 100;
@@ -36,7 +35,7 @@ describe('CacheService Tests (node)', () => {
     it('sets value with the correct TTL', async () => {
         await cache.set(url, response, ttl);
         const stringified = await cache.storage.getItem(`axios-cache::${url}`);
-        const cached = JSON.parse(stringified!) as AxiosCacheObject;
+        const cached = parse(stringified!) as AxiosCacheObject;
         expect(cached.value).toEqual(response);
         expect(cached.expiration).toEqual(new Date().getTime() + ttl);
     });

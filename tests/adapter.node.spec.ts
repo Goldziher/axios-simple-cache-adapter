@@ -1,8 +1,4 @@
-import {
-    AXIOS_CACHE,
-    AxiosCacheRequestConfig,
-    createCacheAdapter,
-} from '../src';
+import { AxiosCacheRequestConfig, createCacheAdapter } from '../src';
 import { CacheService } from '../src/cache';
 import { ONE_SECOND_IN_MS } from '../src/constants';
 import httpAdapter from 'axios/lib/adapters/http';
@@ -104,7 +100,7 @@ describe('axiosCacheAdapter tests (node)', () => {
             );
             await debugAdapter({
                 ...config,
-                [AXIOS_CACHE]: ONE_SECOND_IN_MS,
+                cache: ONE_SECOND_IN_MS,
             });
             if (debug) {
                 expect(consoleSpy).toHaveBeenCalled();

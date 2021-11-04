@@ -6,6 +6,7 @@ import {
 import { AxiosResponse } from 'axios';
 import { LocalStorage as NodeLocalStorage } from 'node-localstorage';
 import { isPromise } from '@tool-belt/type-predicates';
+import { parse, stringify } from 'flatted';
 
 export class CacheService {
     public readonly storage: AxiosCacheStorage | AsyncAxiosCacheStorage;
@@ -27,9 +28,7 @@ export class CacheService {
             cached = await Promise.resolve(cached);
         }
         if (cached) {
-            const { expiration, value } = JSON.parse(
-                cached,
-            ) as AxiosCacheObject;
+            const { expiration, value } = parse(cached) as AxiosCacheObject;
             if (
                 !Number.isNaN(Number(expiration)) &&
                 Number(expiration) < new Date().getTime()
@@ -45,12 +44,20 @@ export class CacheService {
         return null;
     }
 
-    async set(key: string, value: AxiosResponse, ttl: number): Promise<void> {
+    async set(
+        key: string,
+        { config: { headers }, ...response }: AxiosResponse,
+        ttl: number,
+    ): Promise<void> {
         const setItem = this.storage.setItem(
             this.cacheKey(key),
-            JSON.stringify({
+            stringify({
                 expiration: new Date().getTime() + ttl,
-                value,
+                value: {
+                    ...response,
+                    config: { headers },
+                    request: {},
+                },
             }),
         );
         if (isPromise(setItem)) {

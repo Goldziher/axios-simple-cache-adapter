@@ -1,4 +1,3 @@
-import { AXIOS_CACHE } from './constants';
 import {
     AxiosAdapter,
     AxiosPromise,
@@ -36,7 +35,7 @@ export interface AxiosCacheObject {
 }
 
 export interface AxiosCacheRequestConfig extends AxiosRequestConfig {
-    [AXIOS_CACHE]?: boolean | number;
+    cache?: boolean | number;
 }
 
 export interface AxiosCacheAdapter extends AxiosAdapter {

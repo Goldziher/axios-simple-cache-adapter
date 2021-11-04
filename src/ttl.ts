@@ -1,6 +1,6 @@
-import { AXIOS_CACHE, ONE_SECOND_IN_MS } from './constants';
 import { AxiosCacheRequestConfig } from './types';
 import { AxiosResponse } from 'axios';
+import { ONE_SECOND_IN_MS } from './constants';
 import { isBoolean, isNumber } from '@tool-belt/type-predicates';
 import { parse } from 'cache-control-parser';
 
@@ -30,17 +30,17 @@ export function getCacheTTL({
     response: AxiosResponse;
     defaultTTL?: number;
 }): number | null {
-    const configTTL = config[AXIOS_CACHE];
-    if (isBoolean(configTTL)) {
-        if (!configTTL) {
+    const { cache } = config;
+    if (isBoolean(cache)) {
+        if (!cache) {
             return null;
         }
         if (defaultTTL) {
             return defaultTTL;
         }
     }
-    if (isNumber(configTTL) && configTTL > 0) {
-        return configTTL;
+    if (isNumber(cache) && cache > 0) {
+        return cache;
     }
     if (parseHeaders) {
         return parseCacheControlHeader(response);

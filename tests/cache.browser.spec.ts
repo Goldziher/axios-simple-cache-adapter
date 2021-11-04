@@ -3,8 +3,8 @@
  */
 
 import { AxiosCacheObject } from '../src';
-import { AxiosRequestConfig } from 'axios';
 import { CacheService } from '../src/cache';
+import { parse } from 'flatted';
 import localForage from 'localforage';
 
 describe.each([sessionStorage, localForage, undefined])(
@@ -12,14 +12,13 @@ describe.each([sessionStorage, localForage, undefined])(
     (storage) => {
         const url = 'test/';
         const cache = new CacheService(storage);
-        const config: AxiosRequestConfig = { url, method: 'get' };
         const data = { value: 'testValue' };
         const response = {
             data,
             status: 200,
             statusText: 'OK',
             headers: {},
-            config,
+            config: {},
             request: {},
         };
         const ttl = 100;
@@ -41,7 +40,7 @@ describe.each([sessionStorage, localForage, undefined])(
             const stringified = await cache.storage.getItem(
                 `axios-cache::${url}`,
             );
-            const cached = JSON.parse(stringified!) as AxiosCacheObject;
+            const cached = parse(stringified!) as AxiosCacheObject;
             expect(cached.value).toEqual(response);
             expect(cached.expiration).toEqual(new Date().getTime() + ttl);
         });

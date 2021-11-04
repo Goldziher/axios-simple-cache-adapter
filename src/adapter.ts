@@ -35,7 +35,10 @@ export function createCacheAdapter({
                 const msg = `[axios-cache] serving cached response for url: ${url}`;
                 logger.log(msg);
             }
-            return cachedResponse;
+            return {
+                ...cachedResponse,
+                config: { ...config, ...cachedResponse.config },
+            };
         }
         const response = await adapter(config);
         const ttl = getCacheTTL({
