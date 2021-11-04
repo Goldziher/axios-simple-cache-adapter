@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="850e0dfa-744f-4a97-9081-db7b5cb553f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/tests/adapter.node.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/ttl.spec.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/adapter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/adapter.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cache.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/cache.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/adapter.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/adapter.browser.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/cache.browser.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/cache.browser.spec.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/cache.node.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/cache.node.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ttl.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ttl.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/adapter.node.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/adapter.node.spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,6 +73,27 @@
       <recent name="$PROJECT_DIR$/src/cache.ts" />
     </key>
   </component>
+  <component name="RunManager" selected="Jest.All Tests">
+    <configuration name="parseCacheControlHeader tests.overrides max-age with s-maxage when both are provided" type="JavaScriptTestRunnerJest" temporary="true" nameIsGenerated="true">
+      <node-interpreter value="project" />
+      <node-options value="" />
+      <jest-package value="$PROJECT_DIR$/node_modules/jest" />
+      <working-dir value="$PROJECT_DIR$" />
+      <envs />
+      <scope-kind value="TEST" />
+      <test-file value="$PROJECT_DIR$/tests/ttl.spec.ts" />
+      <test-names>
+        <test-name value="parseCacheControlHeader tests" />
+        <test-name value="overrides max-age with s-maxage when both are provided" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Jest.parseCacheControlHeader tests.overrides max-age with s-maxage when both are provided" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -96,7 +115,7 @@
       <workItem from="1635921735113" duration="827000" />
       <workItem from="1635937290037" duration="2033000" />
       <workItem from="1635946358902" duration="1678000" />
-      <workItem from="1635953830830" duration="4100000" />
+      <workItem from="1635953830830" duration="8637000" />
     </task>
     <servers />
   </component>
@@ -115,12 +134,24 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/ttl.ts</url>
+          <line>12</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/test_env$All_Tests.info" NAME="All Tests Coverage Results" MODIFIED="1634299856653" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/axios_cache$All_Tests.info" NAME="All Tests Coverage Results" MODIFIED="1635968039252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/axios_cache$All_Tests.info" NAME="All Tests Coverage Results" MODIFIED="1636012568931" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="JestJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

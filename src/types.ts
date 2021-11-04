@@ -1,4 +1,10 @@
-import { AxiosResponse } from 'axios';
+import { AXIOS_CACHE } from './constants';
+import {
+    AxiosAdapter,
+    AxiosPromise,
+    AxiosRequestConfig,
+    AxiosResponse,
+} from 'axios';
 
 export interface AxiosCacheStorage {
     getItem(key: string): string | null;
@@ -27,4 +33,12 @@ export interface AxiosCacheOptions {
 export interface AxiosCacheObject {
     expiration: number;
     value: AxiosResponse;
+}
+
+export interface AxiosCacheRequestConfig extends AxiosRequestConfig {
+    [AXIOS_CACHE]?: boolean | number;
+}
+
+export interface AxiosCacheAdapter extends AxiosAdapter {
+    (config: AxiosCacheRequestConfig): AxiosPromise;
 }

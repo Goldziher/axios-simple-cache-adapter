@@ -1,7 +1,11 @@
-import { AxiosCacheOptions } from './types';
+import {
+    AxiosCacheAdapter,
+    AxiosCacheOptions,
+    AxiosCacheRequestConfig,
+} from './types';
 import { CacheService } from './cache';
 import { getCacheTTL } from './ttl';
-import axios, { AxiosAdapter, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosAdapter, AxiosResponse } from 'axios';
 
 function getAdapter(): AxiosAdapter {
     return (
@@ -17,10 +21,12 @@ export function createCacheAdapter({
     logger = console,
     storage,
     defaultTTL,
-}: AxiosCacheOptions = {}): AxiosAdapter {
+}: AxiosCacheOptions = {}): AxiosCacheAdapter {
     const cache = new CacheService(storage);
     const adapter = getAdapter();
-    return async function (config: AxiosRequestConfig): Promise<AxiosResponse> {
+    return async function (
+        config: AxiosCacheRequestConfig,
+    ): Promise<AxiosResponse> {
         const isGetRequest = config.method?.toLowerCase() === 'get';
         const url = axios.getUri(config);
         const cachedResponse = isGetRequest ? await cache.get(url) : null;
