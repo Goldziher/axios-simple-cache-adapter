@@ -1,6 +1,7 @@
 dist/
 node_modules/
 coverage/
+AxiosCache/
 .husky/
 .jest/
 *.log

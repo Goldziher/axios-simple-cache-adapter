@@ -36,7 +36,7 @@
         "prepare": "husky install"
     },
     "peerDependencies": {
-        "axios": "*"
+        "axios": ">=0.13.0"
     },
     "devDependencies": {
         "@rollup/plugin-typescript": "^8.3.0",

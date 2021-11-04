@@ -1,1 +1,0 @@
-{"expiration":1636012569415,"value":{"data":{"value":"test"},"status":200,"statusText":"OK","headers":{},"config":{"url":"test/some-sub-path/?params","method":"get"},"request":{}}}
