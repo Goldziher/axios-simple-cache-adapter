@@ -1,7 +1,6 @@
 {
     "name": "axios-cache",
     "version": "1.0.0",
-    "private": true,
     "description": "Configurable cache adapter for axios, works in the browser and node",
     "keywords": [
         "axios",
