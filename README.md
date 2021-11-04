@@ -6,7 +6,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=Goldziher_axios-cache&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=Goldziher_axios-cache)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=Goldziher_axios-cache&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=Goldziher_axios-cache)
 
-# Axios Cache
+# Axios Simple Cache Adapter
 
 Configurable cache adapter for Axios, working in both Browser and Node.
 
