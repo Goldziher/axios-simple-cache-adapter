@@ -3,7 +3,7 @@
  */
 
 import { AxiosCacheObject } from '../src';
-import { CacheService } from '../src/cache';
+import { CacheService, isStorageLike } from '../src/cache';
 import { parse } from 'flatted';
 import localForage from 'localforage';
 
@@ -32,14 +32,14 @@ describe.each([sessionStorage, localForage, undefined])(
         });
 
         afterEach(async () => {
-            await cache.storage.removeItem(`axios-cache::${url}`);
+            await cache.del(url);
         });
 
         it('sets value with the correct TTL', async () => {
             await cache.set(url, response, ttl);
-            const stringified = await cache.storage.getItem(
-                `axios-cache::${url}`,
-            );
+            const stringified = await (isStorageLike(cache.storage)
+                ? cache.storage.getItem(`axios-cache::${url}`)
+                : cache.storage.get(`axios-cache::${url}`));
             const cached = parse(stringified!) as AxiosCacheObject;
             expect(cached.value).toEqual(response);
             expect(cached.expiration).toEqual(new Date().getTime() + ttl);

@@ -1,29 +1,43 @@
 import {
-    AsyncAxiosCacheStorage,
+    AsyncMapLikeCache,
+    AsyncStorageLikeCache,
     AxiosCacheObject,
     AxiosCacheStorage,
+    MapLikeCache,
+    StorageLikeCache,
 } from './types';
 import { AxiosResponse } from 'axios';
-import { LocalStorage as NodeLocalStorage } from 'node-localstorage';
-import { isPromise } from '@tool-belt/type-predicates';
+import { isObject, isPromise } from '@tool-belt/type-predicates';
 import { parse, stringify } from 'flatted';
 
-export class CacheService {
-    public readonly storage: AxiosCacheStorage | AsyncAxiosCacheStorage;
+export function isStorageLike(
+    storage: unknown,
+): storage is StorageLikeCache | AsyncStorageLikeCache {
+    return isObject(storage) && Reflect.has(storage, 'getItem');
+}
 
-    constructor(storage?: AxiosCacheStorage | AsyncAxiosCacheStorage) {
+export function isMapLike(
+    storage: unknown,
+): storage is MapLikeCache | AsyncMapLikeCache {
+    return isObject(storage) && Reflect.has(storage, 'delete');
+}
+
+export class CacheService {
+    public readonly storage: AxiosCacheStorage;
+    constructor(storage?: AxiosCacheStorage) {
         if (storage) {
             this.storage = storage;
         } else {
             this.storage =
-                typeof localStorage !== 'undefined'
-                    ? localStorage
-                    : new NodeLocalStorage('AxiosCache');
+                typeof localStorage !== 'undefined' ? localStorage : new Map();
         }
     }
 
     async get(key: string): Promise<AxiosResponse | null> {
-        let cached = this.storage.getItem(this.cacheKey(key));
+        const cacheKey = this.cacheKey(key);
+        let cached = isStorageLike(this.storage)
+            ? this.storage.getItem(cacheKey)
+            : this.storage.get(cacheKey);
         if (isPromise(cached)) {
             cached = await Promise.resolve(cached);
         }
@@ -33,10 +47,7 @@ export class CacheService {
                 !Number.isNaN(Number(expiration)) &&
                 Number(expiration) < new Date().getTime()
             ) {
-                const removeItem = this.storage.removeItem(this.cacheKey(key));
-                if (isPromise(removeItem)) {
-                    await removeItem;
-                }
+                await this.del(cacheKey);
                 return null;
             }
             return value;
@@ -49,19 +60,35 @@ export class CacheService {
         { config: { headers }, ...response }: AxiosResponse,
         ttl: number,
     ): Promise<void> {
-        const setItem = this.storage.setItem(
-            this.cacheKey(key),
-            stringify({
-                expiration: new Date().getTime() + ttl,
-                value: {
-                    ...response,
-                    config: { headers },
-                    request: {},
-                },
-            }),
-        );
+        const cacheKey = this.cacheKey(key);
+        const value = stringify({
+            expiration: new Date().getTime() + ttl,
+            value: {
+                ...response,
+                config: { headers },
+                request: {},
+            },
+        });
+        const setItem = (
+            isStorageLike(this.storage)
+                ? this.storage.setItem(cacheKey, value)
+                : this.storage.set(cacheKey, value)
+        ) as unknown;
         if (isPromise(setItem)) {
             await setItem;
+        }
+    }
+
+    async del(key: string): Promise<void> {
+        const removeItem = (
+            isStorageLike(this.storage)
+                ? this.storage.removeItem(key)
+                : isMapLike(this.storage)
+                ? this.storage.delete(key)
+                : this.storage.del(key)
+        ) as unknown;
+        if (isPromise(removeItem)) {
+            await removeItem;
         }
     }
 

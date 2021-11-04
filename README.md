@@ -64,8 +64,7 @@ interface AxiosCacheOptions {
 -   `defaultTTL`: default TTL to use when enabling caching for a particular endpoint, defaults to **undefined**
 -   `logger`: logger to use when debug=true, defaults to **console**
 -   `parseHeaders`: parse cache-control headers on the response, defaults to **true**
--   `storage`: storage to use, defaults to **localStorage** in the browser
-    and [node-localstorage](https://www.npmjs.com/package/node-localstorage) in node
+-   `storage`: storage to use, defaults to **localStorage** in the browser and a simple memory based caching in node.
 
 ### The cache request-config param
 
@@ -175,27 +174,67 @@ the `createCacheAdapter` function. You must though make sure that the storage ob
 following interfaces:
 
 ```typescript
-interface AxiosCacheStorage {
+interface StorageLikeCache {
     getItem(key: string): string | null;
 
-    removeItem(key: string): void;
+    setItem(key: string, value: string): any;
 
-    setItem(key: string, value: string): void;
+    removeItem(key: string): any;
 }
 
-interface AsyncAxiosCacheStorage {
+interface AsyncStorageLikeCache {
     getItem(key: string): Promise<string | null>;
 
-    removeItem(key: string): Promise<void>;
-
     setItem(key: string, value: string): Promise<any>;
+
+    removeItem(key: string): Promise<any>;
 }
+
+interface MapLikeCache {
+    get(key: string): string | null;
+
+    set(key: string, value: string): void;
+
+    delete(key: string): any;
+}
+
+interface AsyncMapLikeCache {
+    get(key: string): Promise<string | null>;
+
+    set(key: string, value: string): Promise<any>;
+
+    delete(key: string): Promise<any>;
+}
+
+interface CacheManagerLikeCache {
+    get(key: string): string | null;
+
+    set(key: string, value: string): void;
+
+    del(key: string): any;
+}
+
+interface AsyncCacheManagerLikeCache {
+    get(key: string): Promise<string | null>;
+
+    set(key: string, value: string): Promise<any>;
+
+    del(key: string): Promise<any>;
+}
+
+type AxiosCacheStorage =
+    | StorageLikeCache
+    | AsyncStorageLikeCache
+    | MapLikeCache
+    | AsyncMapLikeCache
+    | CacheManagerLikeCache
+    | AsyncCacheManagerLikeCache;
 ```
 
-Thus, you can easily pass `sessionStorage` or library storage such as [
-localForage](https://www.npmjs.com/package/localforage). If you would like to use some other caching solution,
-e.g. [node-cache-manager](https://www.npmjs.com/package/cache-manager), that has a different api, you will need to pass
-in a wrapper.
+Thus, you can easily pass `sessionStorage`, a library storage such as [
+localForage](https://www.npmjs.com/package/localforage), a node caching library
+like [node-cache-manager](https://www.npmjs.com/package/cache-manager), or even just a simple `new Map<string,string>()`
+.
 
 ## Contributing
 

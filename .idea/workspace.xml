@@ -7,6 +7,11 @@
     <list default="true" id="850e0dfa-744f-4a97-9081-db7b5cb553f1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/cache.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/cache.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/cache.browser.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/cache.browser.spec.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/cache.node.spec.ts" beforeDir="false" afterPath="$PROJECT_DIR$/tests/cache.node.spec.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +43,9 @@
   <component name="KubernetesApiPersistence">
     <option name="context" value="minikube" />
     <option name="namespace" value="default" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
   </component>
   <component name="ProjectId" id="1y32FnFobrhbOQbfPUzvQr74HVs" />
   <component name="ProjectLevelVcsManager">
@@ -153,6 +161,7 @@
       <workItem from="1635937290037" duration="2033000" />
       <workItem from="1635946358902" duration="1678000" />
       <workItem from="1635953830830" duration="22979000" />
+      <workItem from="1636033727829" duration="522000" />
     </task>
     <servers />
   </component>
@@ -173,18 +182,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/cache.ts</url>
-          <line>51</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
