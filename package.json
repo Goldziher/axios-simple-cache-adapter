@@ -13,12 +13,12 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Goldziher/axios-cache.git"
+        "url": "git+https://github.com/Goldziher/axios-simple-cache-adapter.git"
     },
     "bugs": {
-        "url": "https://github.com/Goldziher/axios-cache/issues"
+        "url": "https://github.com/Goldziher/axios-simple-cache-adapter/issues"
     },
-    "homepage": "https://github.com/Goldziher/axios-cache#readme",
+    "homepage": "https://github.com/Goldziher/axios-simple-cache-adapter#readme",
     "files": [
         "dist"
     ],
