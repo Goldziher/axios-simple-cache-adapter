@@ -17,7 +17,7 @@ function getAdapter(): AxiosAdapter {
 
 export function createCacheAdapter({
     debug = false,
-    parseHeaders = true,
+    parseHeaders = false,
     logger = console,
     storage,
     defaultTTL,
@@ -49,7 +49,7 @@ export function createCacheAdapter({
         });
         if (isGetRequest && ttl) {
             if (debug) {
-                const msg = `[axios-cache] caching response for url: ${url}`;
+                const msg = `[axios-cache] caching response for url: ${url} with TTL: ${ttl}`;
                 logger.log(msg);
             }
             await cache.set(url, response, ttl);

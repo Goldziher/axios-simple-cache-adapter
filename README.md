@@ -63,7 +63,7 @@ interface AxiosCacheOptions {
 -   `debug`: log debug message, defaults to **false**
 -   `defaultTTL`: default TTL to use when enabling caching for a particular endpoint, defaults to **undefined**
 -   `logger`: logger to use when debug=true, defaults to **console**
--   `parseHeaders`: parse cache-control headers on the response, defaults to **true**
+-   `parseHeaders`: parse cache-control headers on the response, defaults to **false**
 -   `storage`: storage to use, defaults to **localStorage** in the browser and a simple memory based caching in node.
 
 ### The cache request-config param

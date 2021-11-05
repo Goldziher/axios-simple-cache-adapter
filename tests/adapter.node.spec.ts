@@ -21,7 +21,9 @@ describe('axiosCacheAdapter tests (node)', () => {
     };
     const maxAge = 10;
     const cacheAdapter = createCacheAdapter();
-
+    const cacheAdapterWithParseHeaders = createCacheAdapter({
+        parseHeaders: true,
+    });
     beforeEach(() => {
         jest.resetAllMocks();
         (httpAdapter as jest.Mock).mockImplementation(async () =>
@@ -42,7 +44,7 @@ describe('axiosCacheAdapter tests (node)', () => {
         expect(httpAdapter).toHaveBeenCalledWith(config);
     });
     it('does not cache a response without cache-control headers or AXIOS_CACHE', async () => {
-        await cacheAdapter(config);
+        await cacheAdapterWithParseHeaders(config);
         expect(cacheSetSpy).not.toHaveBeenCalled();
     });
     it.each(['max-age', 's-maxage'])(
@@ -57,7 +59,7 @@ describe('axiosCacheAdapter tests (node)', () => {
             (httpAdapter as jest.Mock).mockImplementationOnce(async () =>
                 Promise.resolve(responseWithHeader),
             );
-            await cacheAdapter(config);
+            await cacheAdapterWithParseHeaders(config);
             expect(cacheSetSpy).toHaveBeenCalled();
         },
     );
