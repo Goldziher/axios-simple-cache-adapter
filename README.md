@@ -8,14 +8,14 @@
 
 # Axios Simple Cache Adapter
 
-Configurable cache adapter for Axios, working in both Browser and Node.
+Configurable cache adapter for Axios, works both in the Browser and in Node.
 
 Features:
 
 -   ✅ Supports both sync and async storage
--   ✅ Supports user defined storage
+-   ✅ Supports user-defined storage
 -   ✅ Supports cache-control headers
--   ✅ Supports per endpoint caching configuration
+-   ✅ Supports caching configuration per endpoint
 -   ✅ Supports defaults
 
 Why this library?
@@ -62,9 +62,9 @@ interface AxiosCacheOptions {
 
 -   `debug`: log debug message, defaults to **false**
 -   `defaultTTL`: default TTL to use when enabling caching for a particular endpoint, defaults to **undefined**
--   `logger`: logger to use when debug=true, defaults to **console**
+-   `logger`: logger to use with debug=true, defaults to **console**
 -   `parseHeaders`: parse cache-control headers on the response, defaults to **false**
--   `storage`: storage to use, defaults to **localStorage** in the browser and a simple memory based caching in node.
+-   `storage`: storage to use, defaults to **localStorage** in the browser and a simple memory-based caching in node.
 
 ### The cache request-config param
 
@@ -76,7 +76,7 @@ interface AxiosCacheRequestConfig extends AxiosRequestConfig {
 }
 ```
 
-You can use it on a per endpoint basis. If the value is a number, this endpoint will be cached for the particular TTL
+You can use it on a per-endpoint basis. If the value is a number, this endpoint will be cached for the particular TTL
 specified:
 
 ```typescript
@@ -118,7 +118,7 @@ async function makeAPICall(): Promise<SomeInterface> {
 }
 ```
 
-If though the value of `cache` is `false`, no caching will occur for that particular endpoint, regardless of defaultTTL
+If, though, the value of `cache` is `false`, no caching will occur for that particular endpoint, regardless of defaultTTL
 and any cache-control headers:
 
 ```typescript
@@ -141,13 +141,13 @@ async function makeAPICall(): Promise<SomeInterface> {
 When to use this feature?
 
 [cache-control headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control) are commonly used in
-APIs to ensure a browser and/or network intermediaries, cache a response. As such, in a browser environment, the browser
-should usually take care of caching - not the code. The main reason to use cache-control header based caching in the
+APIs to ensure a browser (and/or network intermediaries) cache a response. As such, in a browser environment, the browser
+should usually take care of caching - not the code. The main reason to use cache-control-header-based caching in the
 browser, is for using the same cache across multiple tabs - this is possible when using localStorage or a library such
-as `localForage`. But if you intend to use `sessionStorage`, this will be redundant.
+as `localForage`. If you intend to use `sessionStorage`, this will be redundant.
 
 In a nodeJS environment on the other hand, there is no browser involved and cache-control headers should be dealt with
-more explicitly. Here its a good idea to use these headers as a source of truth for cache TTL. Furthermore, if you use a
+more explicitly. Here it is a good idea to use these headers as a source of truth for cache TTL. Furthermore, if you use a
 storage backend that is shared across multiple instances of your server, e.g. a redis cache, you will be able to share
 cached responses.
 
@@ -169,8 +169,8 @@ const response = await instance.get('endpoint-with-cache-control', {
 
 ### Storage
 
-This library is agnostic regarding the storage used. You are free to pass any storage - sync or async - to
-the `createCacheAdapter` function. You must though make sure that the storage object you are passing fulfills one of the
+This library is agnostic regarding the storage used. You are free to pass any storage – sync or async – to
+the `createCacheAdapter` function. You must, though, make sure that the storage object you are passing fulfills one of the
 following interfaces:
 
 ```typescript
