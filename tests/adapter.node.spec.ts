@@ -1,7 +1,8 @@
+import httpAdapter from 'axios/lib/adapters/http';
+
 import { AxiosCacheRequestConfig, createCacheAdapter } from '../src';
 import { CacheService } from '../src/cache';
 import { ONE_SECOND_IN_MS } from '../src/constants';
-import httpAdapter from 'axios/lib/adapters/http';
 
 jest.mock('axios/lib/adapters/http');
 

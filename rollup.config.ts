@@ -1,7 +1,8 @@
+import typescript from '@rollup/plugin-typescript';
 import { OutputOptions } from 'rollup';
 import { terser } from 'rollup-plugin-terser';
+
 import manifest from './package.json';
-import typescript from '@rollup/plugin-typescript';
 
 const { module, main } = manifest as { module: string; main: string };
 

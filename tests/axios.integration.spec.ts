@@ -1,11 +1,12 @@
+import axios from 'axios';
+import { parse } from 'flatted';
+
 import {
     AxiosCacheObject,
     AxiosCacheRequestConfig,
     createCacheAdapter,
 } from '../src';
 import { ONE_SECOND_IN_MS } from '../src/constants';
-import { parse } from 'flatted';
-import axios from 'axios';
 
 describe('axios integration tests', () => {
     jest.setTimeout(60 * ONE_SECOND_IN_MS);

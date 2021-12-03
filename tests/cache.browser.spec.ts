@@ -2,10 +2,11 @@
  * @jest-environment jsdom
  */
 
-import { AxiosCacheObject } from '../src';
-import { CacheService, isStorageLike } from '../src/cache';
 import { parse } from 'flatted';
 import localForage from 'localforage';
+
+import { AxiosCacheObject } from '../src';
+import { CacheService, isStorageLike } from '../src/cache';
 
 describe.each([sessionStorage, localForage, undefined])(
     'CacheService Tests (jsdom)',

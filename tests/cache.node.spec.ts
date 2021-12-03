@@ -2,10 +2,12 @@
  * @jest-environment node
  */
 
+import cacheManager from 'cache-manager';
+import { parse } from 'flatted';
+
 import { AxiosCacheObject } from '../src';
 import { CacheService, isStorageLike } from '../src/cache';
-import { parse } from 'flatted';
-import cacheManager from 'cache-manager';
+
 const memoryCache = cacheManager.caching({
     store: 'memory',
     max: 100,

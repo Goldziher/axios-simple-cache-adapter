@@ -4,11 +4,7 @@ coverage/
 AxiosCache/
 .husky/
 .jest/
+.idea/
 *.log
 
 .DS_Store
-
-# plugin specific .idea files
-.idea/azure
-.idea/*.local.*
-.idea/sonarlint

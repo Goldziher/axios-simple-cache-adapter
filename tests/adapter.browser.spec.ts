@@ -1,9 +1,10 @@
 /**
  * @jest-environment jsdom
  */
-import { AxiosCacheStorage, createCacheAdapter } from '../src';
 import { AxiosRequestConfig } from 'axios';
 import xhrAdapter from 'axios/lib/adapters/xhr';
+
+import { AxiosCacheStorage, createCacheAdapter } from '../src';
 
 jest.mock('axios/lib/adapters/xhr');
 

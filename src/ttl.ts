@@ -1,8 +1,9 @@
-import { AxiosCacheRequestConfig } from './types';
-import { AxiosResponse } from 'axios';
-import { ONE_SECOND_IN_MS } from './constants';
 import { isBoolean, isNumber } from '@tool-belt/type-predicates';
+import { AxiosResponse } from 'axios';
 import { parse } from 'cache-control-parser';
+
+import { ONE_SECOND_IN_MS } from './constants';
+import { AxiosCacheRequestConfig } from './types';
 
 export function parseCacheControlHeader(
     response: AxiosResponse,

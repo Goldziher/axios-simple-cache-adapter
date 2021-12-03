@@ -1,11 +1,12 @@
+import axios, { AxiosAdapter, AxiosResponse } from 'axios';
+
+import { CacheService } from './cache';
+import { getCacheTTL } from './ttl';
 import {
     AxiosCacheAdapter,
     AxiosCacheOptions,
     AxiosCacheRequestConfig,
 } from './types';
-import { CacheService } from './cache';
-import { getCacheTTL } from './ttl';
-import axios, { AxiosAdapter, AxiosResponse } from 'axios';
 
 function getAdapter(): AxiosAdapter {
     return (

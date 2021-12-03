@@ -1,3 +1,7 @@
+import { isObject, isPromise } from '@tool-belt/type-predicates';
+import { AxiosResponse } from 'axios';
+import { parse, stringify } from 'flatted';
+
 import {
     AsyncMapLikeCache,
     AsyncStorageLikeCache,
@@ -6,9 +10,6 @@ import {
     MapLikeCache,
     StorageLikeCache,
 } from './types';
-import { AxiosResponse } from 'axios';
-import { isObject, isPromise } from '@tool-belt/type-predicates';
-import { parse, stringify } from 'flatted';
 
 export function isStorageLike(
     storage: unknown,
