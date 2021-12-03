@@ -5,6 +5,7 @@ AxiosCache/
 .husky/
 .jest/
 .idea/
+.vscode/
 *.log
 
 .DS_Store
