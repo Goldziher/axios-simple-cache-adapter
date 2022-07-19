@@ -60,7 +60,7 @@
         "typescript": "^4.5.2"
     },
     "dependencies": {
-        "@tool-belt/type-predicates": "^1.2.0",
+        "@tool-belt/type-predicates": "^1.2.1",
         "cache-control-parser": "^2.0.2",
         "flatted": "^3.2.4"
     },

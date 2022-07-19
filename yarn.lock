@@ -595,10 +595,10 @@
     eslint-plugin-simple-import-sort "^7.0.0"
     eslint-plugin-sonarjs "^0.11.0"
 
-"@tool-belt/type-predicates@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@tool-belt/type-predicates/-/type-predicates-1.2.0.tgz#bc38cd34697c8664c59ce8a7188f7def3a22be23"
-  integrity sha512-08ow2MwCE8fx9VkWYHPmwFBPOkqGbeh3LRZCC0vzr1QECZpikMOOMTP/IQIE3nEBRQ9GNSs+A/ZRKym2mUvrAA==
+"@tool-belt/type-predicates@^1.2.1":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@tool-belt/type-predicates/-/type-predicates-1.2.2.tgz#88a6cd744162d983854a4e85ee816b0a104ad111"
+  integrity sha512-IuUa3c0fOEJ6YnzMvfPA5BZ2gLafPgSU9YJmXV3hozlxbQGNPMVHrTiMoAERklhssxVQ5AtfEUI6r+6kS4npKw==
 
 "@tootallnate/once@1":
   version "1.1.2"
