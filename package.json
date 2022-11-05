@@ -38,31 +38,31 @@
         "axios": ">=0.13.0"
     },
     "devDependencies": {
-        "@rollup/plugin-typescript": "^8.3.0",
-        "@tool-belt/eslint-config": "^1.1.1",
-        "@types/cache-manager": "^3.4.2",
-        "@types/jest": "^27.0.3",
-        "@types/node": "^16.11.11",
+        "@rollup/plugin-typescript": "^8.5.0",
+        "@tool-belt/eslint-config": "^1.3.1",
+        "@types/cache-manager": "^3.4.3",
+        "@types/jest": "^27.5.2",
+        "@types/node": "^16.18.3",
         "@types/node-localstorage": "^1.3.0",
         "axios": "^0.24.0",
-        "cache-manager": "^3.6.0",
-        "eslint": "^8.3.0",
-        "husky": ">=7",
-        "jest": "^27.4.3",
-        "lint-staged": ">=12",
+        "cache-manager": "^3.6.3",
+        "eslint": "^8.26.0",
+        "husky": "^8.0.1",
+        "jest": "^27.5.1",
+        "lint-staged": "^13.0.3",
         "localforage": "^1.10.0",
-        "prettier": "^2.5.0",
+        "prettier": "^2.7.1",
         "rimraf": "^3.0.2",
         "rollup": "2.60.2",
         "rollup-plugin-terser": "^7.0.2",
-        "ts-jest": "^27.0.7",
-        "ts-node": "^10.4.0",
-        "typescript": "^4.5.2"
+        "ts-jest": "^27.1.5",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.8.4"
     },
     "dependencies": {
-        "@tool-belt/type-predicates": "^1.2.1",
+        "@tool-belt/type-predicates": "^1.2.2",
         "cache-control-parser": "^2.0.2",
-        "flatted": "^3.2.6"
+        "flatted": "^3.2.7"
     },
     "lint-staged": {
         "*.ts": "eslint --fix",
