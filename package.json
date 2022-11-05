@@ -62,7 +62,8 @@
     "dependencies": {
         "@tool-belt/type-predicates": "^1.2.2",
         "cache-control-parser": "^2.0.2",
-        "flatted": "^3.2.7"
+        "flatted": "^3.2.7",
+        "tslib": "^2.4.1"
     },
     "lint-staged": {
         "*.ts": "eslint --fix",
