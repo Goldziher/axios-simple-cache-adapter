@@ -30,7 +30,7 @@ The simplest way to use this library is to create an adapter and pass it to axio
 
 ```typescript
 import axios from 'axios';
-import { AxiosCacheRequestConfig, createCacheAdapter } from 'axios-cache';
+import { AxiosCacheRequestConfig, createCacheAdapter } from 'axios-simple-cache-adapter';
 
 const adapter = createCacheAdapter();
 
