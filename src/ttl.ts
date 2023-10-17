@@ -6,9 +6,10 @@ import { ONE_SECOND_IN_MS } from './constants';
 import { AxiosCacheRequestConfig } from './types';
 
 export function parseCacheControlHeader(
-    response: AxiosResponse,
+    response: AxiosResponse = {} as AxiosResponse,
 ): number | null {
-    for (const [key, value] of Object.entries(response.headers)) {
+    const { headers = {} } = response;
+    for (const [key, value] of Object.entries(headers)) {
         if (key.toLowerCase() === 'cache-control') {
             const cacheControl = parse(value as string);
             const maxAge = cacheControl['s-maxage'] ?? cacheControl['max-age'];
