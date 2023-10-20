@@ -6,6 +6,7 @@ import {
     getAdapter,
     InternalAxiosRequestConfig,
 } from 'axios';
+import { Mock, SpyInstance } from 'vitest';
 
 import { createCacheAdapter } from '../src';
 import { CacheService } from '../src/cache';
@@ -21,8 +22,6 @@ vi.mock('axios', async () => {
 });
 
 describe('axiosCacheAdapter tests (node)', () => {
-    const cacheGetSpy = vi.spyOn(CacheService.prototype, 'get');
-    const cacheSetSpy = vi.spyOn(CacheService.prototype, 'set');
     const url = 'test/some-sub-path/?params';
     const config: InternalAxiosRequestConfig = {
         url,
@@ -43,21 +42,23 @@ describe('axiosCacheAdapter tests (node)', () => {
     const cacheAdapterWithParseHeaders = createCacheAdapter({
         parseHeaders: true,
     });
+
     let httpAdapter: AxiosAdapter;
+    let cacheGetSpy: SpyInstance;
+    let cacheSetSpy: SpyInstance;
 
     beforeEach(() => {
-        // vi.resetAllMocks();
+        vi.clearAllMocks();
+
+        cacheGetSpy = vi.spyOn(CacheService.prototype, 'get');
+        cacheSetSpy = vi.spyOn(CacheService.prototype, 'set');
+
         httpAdapter = getAdapter('http');
-        // (httpAdapter as Mock).mockImplementation(async () => response);
+        (httpAdapter as Mock).mockImplementation(async () => response);
     });
 
     beforeAll(() => {
         vi.useFakeTimers();
-    });
-
-    afterEach(() => {
-        vi.clearAllMocks();
-        // vi.resetAllMocks();
     });
 
     afterAll(() => {
@@ -74,27 +75,21 @@ describe('axiosCacheAdapter tests (node)', () => {
         expect(cacheSetSpy).not.toHaveBeenCalled();
     });
 
-    // it.each(['max-age', 's-maxage'])(
-    //     'caches a response when cache-control %s instruction is present',
-    //     async (instruction: string) => {
-    //         const responseWithHeader = {
-    //             ...response,
-    //             headers: {
-    //                 'cache-control': `public, ${instruction}=${maxAge}`,
-    //             },
-    //         };
-    //         mockAdapter.mockImplementationOnce(async () => responseWithHeader);
-    //         await cacheAdapterWithParseHeaders(config);
-    //         expect(cacheSetSpy).toHaveBeenCalled();
-
-    //         mockAdapter.mockClear();
-    //         mockAdapter.mockReset();
-    //         cacheSetSpy.mockClear();
-    //         cacheSetSpy.mockReset();
-    //         // vi.clearAllMocks();
-    //         // vi.resetAllMocks();
-    //     },
-    // );
+    it.each(['max-age', 's-maxage'])(
+        'caches a response when cache-control %s instruction is present',
+        async (instruction: string) => {
+            cacheGetSpy.mockReturnValueOnce(null);
+            const responseWithHeader = {
+                ...response,
+                headers: {
+                    'cache-control': `public, ${instruction}=${maxAge}`,
+                },
+            };
+            mockAdapter.mockImplementationOnce(async () => responseWithHeader);
+            await cacheAdapterWithParseHeaders(config);
+            expect(cacheSetSpy).toHaveBeenCalled();
+        },
+    );
 
     describe.each(['put', 'patch', 'delete', 'post', undefined])(
         'method handling - %s',

@@ -49,7 +49,7 @@ describe(
             expect('abilities' in response.data).toBeTruthy();
 
             const cached = testStorage.getItem(
-                'axios-cache::' + pokeAPI + subPath,
+                `axios-cache::${pokeAPI}${subPath}`,
             );
 
             expect(cached).toBeTruthy();
