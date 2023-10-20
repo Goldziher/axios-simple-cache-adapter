@@ -30,7 +30,7 @@ export class CacheService {
             this.storage = storage;
         } else {
             this.storage =
-                typeof localStorage !== 'undefined' ? localStorage : new Map();
+                typeof localStorage === 'undefined' ? new Map() : localStorage;
         }
     }
 
@@ -46,7 +46,7 @@ export class CacheService {
             const { expiration, value } = parse(cached) as AxiosCacheObject;
             if (
                 !Number.isNaN(Number(expiration)) &&
-                Number(expiration) < new Date().getTime()
+                Number(expiration) < Date.now()
             ) {
                 await this.del(cacheKey);
                 return null;
@@ -63,7 +63,7 @@ export class CacheService {
     ): Promise<void> {
         const cacheKey = this.cacheKey(key);
         const value = stringify({
-            expiration: new Date().getTime() + ttl,
+            expiration: Date.now() + ttl,
             value: {
                 ...response,
                 config: { headers },

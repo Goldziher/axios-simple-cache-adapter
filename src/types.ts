@@ -1,8 +1,8 @@
 import {
     AxiosAdapter,
     AxiosPromise,
-    AxiosRequestConfig,
     AxiosResponse,
+    InternalAxiosRequestConfig,
 } from 'axios';
 
 export interface StorageLikeCache {
@@ -61,7 +61,7 @@ export interface AxiosCacheObject {
     value: AxiosResponse;
 }
 
-export interface AxiosCacheRequestConfig extends AxiosRequestConfig {
+export interface AxiosCacheRequestConfig extends InternalAxiosRequestConfig {
     cache?: boolean | number;
 }
 

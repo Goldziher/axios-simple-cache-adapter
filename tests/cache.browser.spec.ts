@@ -1,7 +1,8 @@
 /**
- * @jest-environment jsdom
+ * @vitest-environment jsdom
  */
 
+import { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { parse } from 'flatted';
 import localForage from 'localforage';
 
@@ -19,17 +20,17 @@ describe.each([sessionStorage, localForage, undefined])(
             status: 200,
             statusText: 'OK',
             headers: {},
-            config: {},
+            config: { headers: {} as AxiosRequestHeaders },
             request: {},
-        };
+        } satisfies AxiosResponse;
         const ttl = 100;
 
         beforeAll(() => {
-            jest.useFakeTimers();
+            vi.useFakeTimers();
         });
 
         afterAll(() => {
-            jest.useRealTimers();
+            vi.useRealTimers();
         });
 
         afterEach(async () => {
@@ -43,14 +44,14 @@ describe.each([sessionStorage, localForage, undefined])(
                 : cache.storage.get(`axios-cache::${url}`));
             const cached = parse(stringified!) as AxiosCacheObject;
             expect(cached.value).toEqual(response);
-            expect(cached.expiration).toEqual(new Date().getTime() + ttl);
+            expect(cached.expiration).toEqual(Date.now() + ttl);
         });
 
         it('respects expiration', async () => {
             await cache.set(url, response, ttl);
             let cached = await cache.get(url);
             expect(cached).toEqual(response);
-            jest.advanceTimersByTime(ttl + 1);
+            vi.advanceTimersByTime(ttl + 1);
             cached = await cache.get(url);
             expect(cached).toBeNull();
         });
