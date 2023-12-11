@@ -42,9 +42,9 @@ export function createCacheAdapter({
 
         const ttl = getCacheTTL({
             config,
-            response,
             defaultTTL,
             parseHeaders,
+            response,
         });
 
         if (isGetRequest && ttl) {

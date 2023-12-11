@@ -66,9 +66,9 @@ describe('getCacheTTL tests', () => {
         'for AXIOS_CACHE = %s, defaultTTL = %s, returns %s',
         (symbolValue, defaultTTL, parseHeaders, returnVal) => {
             const value = getCacheTTL({
-                parseHeaders,
-                defaultTTL,
                 config: { cache: symbolValue },
+                defaultTTL,
+                parseHeaders,
                 response: {
                     headers: { 'cache-control': 'max-age=1' },
                 } as any,

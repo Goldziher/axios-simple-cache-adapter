@@ -16,12 +16,12 @@ describe.each([sessionStorage, localForage, undefined])(
         const cache = new CacheService(storage);
         const data = { value: 'testValue' };
         const response = {
+            config: { headers: {} as AxiosRequestHeaders },
             data,
+            headers: {},
+            request: {},
             status: 200,
             statusText: 'OK',
-            headers: {},
-            config: { headers: {} as AxiosRequestHeaders },
-            request: {},
         } satisfies AxiosResponse;
         const ttl = 100;
 

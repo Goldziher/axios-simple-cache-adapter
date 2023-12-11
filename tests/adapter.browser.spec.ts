@@ -14,14 +14,14 @@ vi.mock('axios', async () => {
 describe('axiosCacheAdapter tests (jsdom)', () => {
     const url = 'test/some-sub-path/?params';
     const config: InternalAxiosRequestConfig = {
-        url,
-        method: 'get',
         headers: {} as AxiosRequestHeaders,
+        method: 'get',
+        url,
     };
     const mockStorage: AxiosCacheStorage = {
         getItem: vi.fn().mockImplementation(() => Promise.resolve(null)),
-        setItem: vi.fn(),
         removeItem: vi.fn(),
+        setItem: vi.fn(),
     };
     const cacheAdapter = createCacheAdapter({ storage: mockStorage });
 

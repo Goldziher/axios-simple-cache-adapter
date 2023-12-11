@@ -85,8 +85,8 @@ export class CacheService {
             isStorageLike(this.storage)
                 ? this.storage.removeItem(key)
                 : isMapLike(this.storage)
-                ? this.storage.delete(key)
-                : this.storage.del(key)
+                  ? this.storage.delete(key)
+                  : this.storage.del(key)
         ) as unknown;
         if (isPromise(removeItem)) {
             await removeItem;

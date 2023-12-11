@@ -24,18 +24,18 @@ vi.mock('axios', async () => {
 describe('axiosCacheAdapter tests (node)', () => {
     const url = 'test/some-sub-path/?params';
     const config: InternalAxiosRequestConfig = {
-        url,
-        method: 'get',
         headers: {} as AxiosRequestHeaders,
+        method: 'get',
+        url,
     };
     const data = { value: 'test' };
     const response = {
+        config,
         data,
+        headers: {},
+        request: {},
         status: 200,
         statusText: 'OK',
-        headers: {},
-        config,
-        request: {},
     };
     const maxAge = 10;
     const cacheAdapter = createCacheAdapter();

@@ -27,10 +27,10 @@ export function getCacheTTL({
     response,
     defaultTTL,
 }: {
-    parseHeaders: boolean;
     config: AxiosCacheRequestConfig;
-    response: AxiosResponse;
     defaultTTL?: number;
+    parseHeaders: boolean;
+    response: AxiosResponse;
 }): number | null {
     const { cache } = config;
     if (isBoolean(cache)) {

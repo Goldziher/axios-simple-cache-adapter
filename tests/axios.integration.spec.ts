@@ -20,11 +20,11 @@ describe(
             getItem(key: string): string | null {
                 return store.get(key) ?? null;
             },
-            setItem(key: string, value: string): void {
-                store.set(key, value);
-            },
             removeItem(key: string): void {
                 store.delete(key);
+            },
+            setItem(key: string, value: string): void {
+                store.set(key, value);
             },
         };
 
@@ -41,7 +41,7 @@ describe(
             const adapter = createCacheAdapter({
                 storage: testStorage,
             });
-            const instance = axios.create({ baseURL: pokeAPI, adapter });
+            const instance = axios.create({ adapter, baseURL: pokeAPI });
             const response = await instance.get(subPath, requestConfig);
 
             expect(response.status).toBe(200);
