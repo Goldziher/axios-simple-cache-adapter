@@ -17,6 +17,9 @@ export default defineConfig({
             name,
         },
         minify: true,
+        rollupOptions: {
+            external: ['axios']
+        }
     },
     plugins: [dts({ rollupTypes: true })],
     test: {

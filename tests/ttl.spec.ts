@@ -1,3 +1,4 @@
+import { AxiosCacheRequestConfig } from '../src/types';
 import { ONE_SECOND_IN_MS } from '../src/constants';
 import { getCacheTTL, parseCacheControlHeader } from '../src/ttl';
 
@@ -66,7 +67,7 @@ describe('getCacheTTL tests', () => {
         'for AXIOS_CACHE = %s, defaultTTL = %s, returns %s',
         (symbolValue, defaultTTL, parseHeaders, returnVal) => {
             const value = getCacheTTL({
-                config: { cache: symbolValue },
+                config: { cache: symbolValue } as AxiosCacheRequestConfig,
                 defaultTTL,
                 parseHeaders,
                 response: {
